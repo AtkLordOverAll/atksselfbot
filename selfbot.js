@@ -9,7 +9,7 @@ client.on("ready", () => {
 
 client.on("message", message => {
     // stops running if message isn't from user or doesn't have prefix
-    if (message.author !== client.user || !message.startsWith(config.prefix)){
+    if (message.author !== client.user || !message.content.startsWith(config.prefix)){
         return;
     }
 
@@ -25,7 +25,20 @@ client.on("message", message => {
         });
     }
 
-    
+    if (message.content.startsWith(config.prefix + "fix")) {
+        let stopAfter = parseInt(args[0]);
+
+        if (isNaN(stopAfter)) {
+            stopAfter = 20;
+        }
+
+        message.channel.fetchMessages({limit: stopAfter})
+        .then(messages => {
+            let messageArray = messages.array();
+            messageArray = messageArray.filter(m => m.author.id === client.user.id);
+            console.log(messageArray);
+        });
+    }
 
 });
 
