@@ -23,9 +23,8 @@ client.on("message", message => {
     }
 
     if (command === "img") {
-        let dir = `./images/${args.join(" ")}`;
         message.delete().catch(console.error);
-        message.channel.send("", {file: `${dir}`});
+        message.channel.send("", {file: `./images/${args.join(" ")}`});
         //setTimeout(() => {message.channel.send("", {file: "./images/sadshowerpepe.jpg"});}, 50);
     }
 
