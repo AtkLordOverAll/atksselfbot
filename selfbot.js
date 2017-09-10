@@ -16,7 +16,7 @@ client.on("message", message => {
     const command = message.content.split(/\s+/g)[0].substring(1);
     const args = message.content.split(" ").slice(1);
 
-    if (command === "prune") {
+    /*if (command === "prune") {
         message.channel.fetchMessages({limit: 100})
         .then(messages => {
             let messageArray = messages.array();
@@ -24,9 +24,9 @@ client.on("message", message => {
             messageArray.length = message.count + 1; // test this line
             messageArray.map(m => m.delete().catch(console.error));
         });
-    }
+    }*/
 
-    if (command === "fix") {
+    /*if (command === "fix") {
         let stopAfter = parseInt(args[0]);
 
         if (isNaN(stopAfter)) {
@@ -38,7 +38,7 @@ client.on("message", message => {
             messageArray = messageArray.filter(m => m.author.id === client.user.id);
             console.log(messageArray);
         });
-    }
+    }*/
 
 });
 
