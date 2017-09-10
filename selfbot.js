@@ -22,12 +22,16 @@ client.on("message", message => {
         console.log(`Saw ${command} command with arguments [${args}], sent from user ${message.author.username} (ID: ${message.author.id})`);
     }
 
-    if (command === "meme") {
+    if (command === "img") {
         let dir = `./images/${args.join(" ")}`;
         message.delete().catch(console.error);
-        message.channel.send("", {file: `${dir}.jpg`});
-        message.channel.send("", {file: `${dir}.png`});
+        message.channel.send("", {file: `${dir}`});
         //setTimeout(() => {message.channel.send("", {file: "./images/sadshowerpepe.jpg"});}, 50);
+    }
+
+    if (command === "imglist") {
+        let files = fs.readdirSync("./images");
+        message.edit(`Atk's self-bot speaking, your available images are:\n*${files.join("\n")}*`);
     }
 
     /*if (command === "prune") {
