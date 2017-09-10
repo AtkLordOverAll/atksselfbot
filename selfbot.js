@@ -30,8 +30,7 @@ client.on("message", message => {
     }
 
     if (command === "imglist") {
-        let files = fs.readdirSync("./images");
-        message.edit(`Atk's self-bot speaking, your available images are:\n*${files.join("\n")}*`);
+        message.edit(`Atk's self-bot speaking, your available images are:\n*${fs.readdirSync("./images").join("\n")}*`);
     }
 
     /*if (command === "prune") {
