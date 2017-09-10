@@ -13,9 +13,10 @@ client.on("message", message => {
         return;
     }
 
+    const command = message.content.split(/\s+/g)[0].substring(1);
     const args = message.content.split(" ").slice(1);
 
-    if (message.content.startsWith(config.prefix + "prune")) {
+    if (command === "prune") {
         message.channel.fetchMessages({limit: 100})
         .then(messages => {
             let messageArray = messages.array();
@@ -25,15 +26,14 @@ client.on("message", message => {
         });
     }
 
-    if (message.content.startsWith(config.prefix + "fix")) {
+    if (command === "fix") {
         let stopAfter = parseInt(args[0]);
 
         if (isNaN(stopAfter)) {
             stopAfter = 20;
         }
 
-        message.channel.fetchMessages({limit: stopAfter})
-        .then(messages => {
+        message.channel.fetchMessages({limit: stopAfter}).then(messages => {
             let messageArray = messages.array();
             messageArray = messageArray.filter(m => m.author.id === client.user.id);
             console.log(messageArray);
