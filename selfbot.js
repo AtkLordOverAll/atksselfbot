@@ -13,8 +13,20 @@ client.on("message", message => {
         return;
     }
 
-    const command = message.content.split(/\s+/g)[0].substring(1);
+    const command = message.content.split(/\s+/g)[0].substring(8);
     const args = message.content.split(" ").slice(1);
+
+    if (args.length === 0) {
+        console.log(`Saw ${command} command sent from user ${message.author.username} (ID: ${message.author.id})`);
+    } else {
+        console.log(`Saw ${command} command with arguments [${args}], sent from user ${message.author.username} (ID: ${message.author.id})`);
+    }
+
+    if (command === "meme") {
+        message.delete().catch(console.error);
+        message.channel.send("", {file: "./images/sadshowerpepe.jpg"});
+        //setTimeout(() => {message.channel.send("", {file: "./images/sadshowerpepe.jpg"});}, 50);
+    }
 
     /*if (command === "prune") {
         message.channel.fetchMessages({limit: 100})
