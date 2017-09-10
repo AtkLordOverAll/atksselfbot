@@ -23,8 +23,10 @@ client.on("message", message => {
     }
 
     if (command === "meme") {
+        let dir = `./images/${args.join(" ")}`;
         message.delete().catch(console.error);
-        message.channel.send("", {file: "./images/sadshowerpepe.jpg"});
+        message.channel.send("", {file: `${dir}.jpg`});
+        message.channel.send("", {file: `${dir}.png`});
         //setTimeout(() => {message.channel.send("", {file: "./images/sadshowerpepe.jpg"});}, 50);
     }
 
