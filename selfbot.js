@@ -25,29 +25,30 @@ client.on("message", message => {
     if (command === "img") {
         message.delete().catch(console.error);
         let files = fs.readdirSync("./images");
-        let searchTerm = args.join(" ").toLowerCase();
         let item, chosenImg;
-        console.log(`Searching for ${searchTerm} in ./images/`);
+        console.log(`Searching for ${args[0].toLowerCase()} in ./images/`);
         for (item in files) {
-            if (files[item].substring(0, files[item].length - 4).toLowerCase() == searchTerm) {
-                console.log(`Perfect match found: ${files[item]}`);
-                chosenImg = item;
-                break;
-            } else if (files[item].substring(0, files[item].length - 4).toLowerCase().startsWith(searchTerm)) {
-                console.log(`Partial match found: ${files[item]}`);
+            if (files[item].substring(0, files[item].length - 4).toLowerCase().startsWith(args[0].toLowerCase())) {
+                console.log(`Match found: ${files[item]}`);
                 chosenImg = item;
                 break;
             }
         }
         if (chosenImg !== undefined){
-            message.channel.send("", {file: `./images/${files[chosenImg]}`});
+            message.channel.send(args.slice(1).join(" "), {file: `./images/${files[chosenImg]}`});
         }
-        //setTimeout(() => {message.channel.send("", {file: "./images/sadshowerpepe.jpg"});}, 50);
+        console.log("\n");
+        return;
     }
 
     if (command === "imglist") {
-        message.edit(`Atk's self-bot speaking, your available images are:\n*${fs.readdirSync("./images").join("\n")}*`);
+        message.edit(`${client.user.username}'s self-bot speaking, your available images are:\n*${fs.readdirSync("./images").join("\n")}*`);
+        console.log(`Delivered image list\n`);
+        return;
     }
+
+    //if command isn't identified, clean up the mess, it's probably me being an idiot
+    message.delete().catch(console.error);
 
     /*if (command === "prune") {
         message.channel.fetchMessages({limit: 100})
