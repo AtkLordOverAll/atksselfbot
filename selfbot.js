@@ -24,7 +24,24 @@ client.on("message", message => {
 
     if (command === "img") {
         message.delete().catch(console.error);
-        message.channel.send("", {file: `./images/${args.join(" ")}`});
+        let files = fs.readdirSync("./images");
+        let searchTerm = args.join(" ").toLowerCase();
+        let item, chosenImg, hits = 0;
+        let hit = false;
+        console.log(`Searching for ${searchTerm} in ./images/`);
+        for (item in files) {
+            if (files[item].toLowerCase().startsWith(searchTerm)) {
+                chosenImg = item;
+                hits++;
+            } else if (hit > 0){
+                break;
+            }
+        }
+        console.log(`Found ${hits} match(es)`);
+        if (chosenImg !== undefined){
+            console.log("Sending image");
+            message.channel.send("", {file: `./images/${files[chosenImg]}`});
+        }
         //setTimeout(() => {message.channel.send("", {file: "./images/sadshowerpepe.jpg"});}, 50);
     }
 
