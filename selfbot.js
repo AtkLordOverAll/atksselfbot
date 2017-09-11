@@ -25,17 +25,14 @@ client.on("message", message => {
     if (command === "img") {
         message.delete().catch(console.error);
         let files = fs.readdirSync("./images");
-        let item, chosenImg;
+        let item;
         console.log(`Searching for ${args[0].toLowerCase()} in ./images/`);
         for (item in files) {
             if (files[item].substring(0, files[item].length - 4).toLowerCase().startsWith(args[0].toLowerCase())) {
                 console.log(`Match found: ${files[item]}`);
-                chosenImg = item;
-                break;
+                message.channel.send(args.slice(1).join(" "), {file: `./images/${files[item]}`});
+                return;
             }
-        }
-        if (chosenImg !== undefined){
-            message.channel.send(args.slice(1).join(" "), {file: `./images/${files[chosenImg]}`});
         }
         console.log("\n");
         return;
@@ -47,7 +44,7 @@ client.on("message", message => {
         return;
     }
 
-    //if command isn't identified, clean up the mess, it's probably me being an idiot
+    // if command isn't identified, clean up the mess, it's probably me being an idiot
     message.delete().catch(console.error);
 
     /*if (command === "prune") {
