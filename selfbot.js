@@ -26,20 +26,20 @@ client.on("message", message => {
         message.delete().catch(console.error);
         let files = fs.readdirSync("./images");
         let searchTerm = args.join(" ").toLowerCase();
-        let item, chosenImg, hits = 0;
-        let hit = false;
+        let item, chosenImg;
         console.log(`Searching for ${searchTerm} in ./images/`);
         for (item in files) {
-            if (files[item].toLowerCase().startsWith(searchTerm)) {
+            if (files[item].substring(0, files[item].length - 4).toLowerCase() == searchTerm) {
+                console.log(`Perfect match found: ${files[item]}`);
                 chosenImg = item;
-                hits++;
-            } else if (hit > 0){
+                break;
+            } else if (files[item].substring(0, files[item].length - 4).toLowerCase().startsWith(searchTerm)) {
+                console.log(`Partial match found: ${files[item]}`);
+                chosenImg = item;
                 break;
             }
         }
-        console.log(`Found ${hits} match(es)`);
         if (chosenImg !== undefined){
-            console.log("Sending image");
             message.channel.send("", {file: `./images/${files[chosenImg]}`});
         }
         //setTimeout(() => {message.channel.send("", {file: "./images/sadshowerpepe.jpg"});}, 50);
